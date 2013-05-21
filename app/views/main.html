@@ -1,0 +1,29 @@
+<!-- <div class="hero-unit">
+   <h1>'Allo, 'Allo!</h1>
+
+  <p>You now have</p>
+  <ul>
+    <li ng-repeat="thing in awesomeThings">{{thing}}</li>
+  </ul>
+  <p>installed.</p>
+   <h3>Enjoy coding! - Yeoman</h3>
+
+</div>
+-->
+<div id='canvas'></div>
+<div class="container" ng-controller='AceCtrl'>
+  <div class='row'>
+    <div class='span12'>
+      <button class='btn' ng-class='{active: !visible}' ng-click='toggle()'><i class='icon-eye-close'></i> Hide</button>
+    </div>
+  </div>
+  <div class="row" ng-show='visible'>
+    <div ui-ace="{
+  useWrapMode : true,
+  showGutter: true,
+  theme:'solarized_light',
+  mode: 'xml'
+  }" ng-model='editorText'></div>
+    <div>{{editorText}}</div>
+  </div>
+</div>
