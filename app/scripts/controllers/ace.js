@@ -14,4 +14,13 @@ angular.module('yoNodesApp')
     $scope.visible = !$scope.visible;
     $scope.active = 'active';
   };
+
+  $scope.models = [];
+  $scope.addVersion = function () {
+      var index = $scope.models.length;
+      $scope.models.push({name: index, text: $scope.editorText})
+  }
+  $scope.loadVersion = function (index) {
+    $scope.editorText = $scope.models[index].text;
+  }
 });

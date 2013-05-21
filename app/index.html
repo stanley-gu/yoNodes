@@ -59,23 +59,7 @@
           <script src="scripts/controllers/ace.js"></script>
           <script src="scripts/directives/biographer.js"></script>
           <!-- endbuild -->
-          <div id='canvas'></div>
-          <div class="container" ng-controller='AceCtrl'>
-            <div class='row'>
-              <div class='span12'>
-                <button class='btn' ng-class='{active: !visible}' ng-click='toggle()'><i class='icon-eye-close'></i> Hide</button>
-              </div>
-            </div>
-            <div class="row" ng-show='visible'>
-              <div ui-ace="{
-  useWrapMode : true,
-  showGutter: true,
-  theme:'solarized_light',
-  mode: 'xml'
-  }" ng-model='editorText'></div>
-              <div>{{editorText}}</div>
-            </div>
-          </div>
+					<div class="container" ng-view></div>
           <!-- <script type='text/javascript'>
             bui.ready(function()
             {
