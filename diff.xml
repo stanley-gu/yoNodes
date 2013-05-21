@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bives type="fullDiff">
+    <update>
+        <attribute name="initialAmount" newPath="/sbml[1]/model[1]/listOfSpecies[1]/species[3]" newValue="1" oldPath="/sbml[1]/model[1]/listOfSpecies[1]/species[3]" oldValue="0"/>
+    </update>
+    <delete/>
+    <insert/>
+    <move/>
+    <copy/>
+    <glue/>
+</bives>
+
