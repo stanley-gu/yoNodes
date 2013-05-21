@@ -7,7 +7,7 @@ angular.module('yoNodesApp')
       'AngularJS',
       'Karma'
   ];
-  $scope.editorText = 'Enter in some text here';
+  $scope.editorText = 'Enter in some SBML here';
   $scope.visible = true;
   $scope.active = '';
   $scope.toggle = function() {

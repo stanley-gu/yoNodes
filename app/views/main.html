@@ -10,7 +10,6 @@
 
 </div>
 -->
-<div id='canvas'></div>
 <div class="container" ng-controller='AceCtrl'>
   <div class='row'>
     <div class='span12'>
@@ -24,14 +23,5 @@
   theme:'solarized_light',
   mode: 'xml'
   }" ng-model='editorText'></div>
-    <div>{{editorText}}</div>
   </div>
 </div>
-<script type='text/javascript'>
-  bui.ready(function()
-  {
-    var canvas = document.getElementById('canvas');
-    graph = new bui.Graph(canvas);
-    bui.importFromJSON(graph, showcaseJSON);
-  })
-</script>
