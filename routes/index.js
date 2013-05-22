@@ -7,18 +7,24 @@ var exec = require('child_process').exec,
   child;
 
 exports.index = function(req, res) {
+  'use strict';
   res.render('index', {
     title: 'Express'
   });
 };
 
 exports.bives = function(req, res) {
+  'use strict';
   fs.unlink('first.xml', function(err) {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     console.log('successfully deleted /tmp/hello');
   });
   fs.unlink('second.xml', function(err) {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     console.log('successfully deleted /tmp/hello');
   });
   fs.writeFile("first.xml", req.body.first, function(err) {

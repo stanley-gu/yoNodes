@@ -12,12 +12,11 @@
 -->
 <div class="container" ng-controller='AceCtrl'>
   <div class='row'>
-    <!--
-    <div>
+    <!-- <div>
       <button class='btn' ng-class='{active: !visible}' ng-click='toggle()'><i class='icon-eye-close'></i> Hide</button>
-    </div>-->
-  </div>
-  <h1>Enter SBML:</h1>
+    </div>--></div>
+   <h1>Enter SBML:</h1>
+
   <div class="row" ng-show='visible'>
     <div ui-ace="{
   useWrapMode : true,
@@ -56,4 +55,5 @@
   mode: 'xml'
   }" ng-model='modelDiff'>
 </div>
+
 
