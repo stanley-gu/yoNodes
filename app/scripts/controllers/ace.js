@@ -9,6 +9,10 @@ angular.module('yoNodesApp')
     $scope.visible = !$scope.visible;
     $scope.active = 'active';
   };
+  $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
+  $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/contents/model.sbml').success(function(data){
+    $scope.editorText = data;
+  });
 
   $scope.models = [];
   $scope.addVersion = function() {
