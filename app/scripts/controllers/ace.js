@@ -29,11 +29,19 @@ angular.module('yoNodesApp')
   };
 
   $scope.compareVersions = function() {
+    var isChecked = [];
+    $scope.models.forEach(function(element, index, array){
+        if (element.checked) {
+            isChecked.push(index);
+        }
+    })
     $http.post('http://localhost:3000/bives', {
-      'foo': 'bar'
-    }).success(function() {
+      'first': $scope.models[0].text,
+      'second': $scope.models[1].text
+    }).success(function(data, status, headers, config) {
+      $scope.modelDiff = data;
       console.log('Sent request!');
-    }).error(function() {
+    }).error(function(data, status, headers, config) {
       console.log('Error!');
     });
   }
