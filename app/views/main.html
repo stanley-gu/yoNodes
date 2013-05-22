@@ -11,49 +11,44 @@
 </div>
 -->
 <div class="container" ng-controller='AceCtrl'>
-  <div class='row'>
-    <!-- <div>
+  <accordion close-others='true'>
+    <accordion-group heading='Header1'>Some Content</accordion-group>
+  </accordion>
+  <!-- <div>
       <button class='btn' ng-class='{active: !visible}' ng-click='toggle()'><i class='icon-eye-close'></i> Hide</button>
-    </div>--></div>
+    </div>-->
    <h1>Enter SBML:</h1>
 
   <div class="row" ng-show='visible'>
-    <div ui-ace="{
-  useWrapMode : true,
-  showGutter: true,
-  theme:'solarized_light',
-  mode: 'xml'
-  }" ng-model='editorText'></div>
-  </div>
-  <div>
-    <button class='btn btn-large' ng-click='addVersion()'><i class='icon-plus-sign'></i> Save Version</button>
-  </div>
-   <h1>Saved Models:</h1>
+    <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_light', mode: 'xml'}"
+    ng-model='editorText'></div>
+    <div>
+      <button class='btn btn-large' ng-click='addVersion()'><i class='icon-plus-sign'></i> Save Version</button>
+    </div>
+     <h1>Saved Models:</h1>
 
-  <table class="table table-striped">
-    <th>Model Version #</th>
-    <th>Load This Model</th>
-    <th>Check to Compare</th>
-    <tr ng-repeat='model in models'>
-      <td>{{model.name}}</td>
-      <td>
-        <button class='btn' ng-click='loadVersion($index)'><i class='icon-share'></i>
+    <table class="table table-striped">
+      <th>Model Version #</th>
+      <th>Load This Model</th>
+      <th>Check to Compare</th>
+      <tr ng-repeat='model in models'>
+        <td>{{model.name}}</td>
+        <td>
+          <button class='btn' ng-click='loadVersion($index)'><i class='icon-share'></i>
 
-        </button>
-      </td>
-      <td>
-        <input type='checkbox' ng-model='model.checked'>
-      </td>
-    </tr>
-  </table>
-  <button class='btn btn-large' ng-click='compareVersions()'><i class='icon-list-alt'></i> Compare Versions</button>
-   <h1>View Model Diff<h1>
-      <div ui-ace="{
-  useWrapMode : true,
-  showGutter: true,
-  theme:'solarized_dark',
-  mode: 'xml'
-  }" ng-model='modelDiff'>
+          </button>
+        </td>
+        <td>
+          <input type='checkbox' ng-model='model.checked'>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class='row'>
+    <button class='btn btn-large' ng-click='compareVersions()'><i class='icon-list-alt'></i> Compare Versions</button>
+     <h1>View Model Diff</h1>
+
+    <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_dark', mode: 'xml'}"
+    ng-model='modelDiff'></div>
+  </div>
 </div>
-
-

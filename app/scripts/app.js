@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('yoNodesApp', ['ui.ace', 'ui'])
+angular.module('yoNodesApp', ['ui', 'ui.ace', 'ui.bootstrap'])
   .config(function($routeProvider) {
   $routeProvider
     .when('/', {
