@@ -2,11 +2,7 @@
 
 angular.module('yoNodesApp')
   .controller('AceCtrl', function($scope, $http) {
-  $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-  ];
+  $scope.awesomeThings = ['HTML5 Boilerplate', 'AngularJS', 'Karma'];
   $scope.editorText = 'Enter in some SBML here';
   $scope.visible = true;
   $scope.active = '';
