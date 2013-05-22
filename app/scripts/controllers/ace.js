@@ -5,21 +5,29 @@ angular.module('yoNodesApp')
   $scope.awesomeThings = ['HTML5 Boilerplate', 'AngularJS', 'Karma'];
   $scope.visible = true;
   $scope.active = '';
+  $scope.models = [];
   $scope.toggle = function() {
     $scope.visible = !$scope.visible;
     $scope.active = 'active';
   };
 
-  $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/commits').success(function(data){
-    $scope.editorText = data;
-  });
-
   $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
-  $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/contents/model.sbml').success(function(data){
-    $scope.editorText = data;
+  $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/commits').success(function(data) {
+    $scope.commits = data;
+    $scope.versions = [];
+    //$http.get(data[0].commit.url + '/model.sbml').success
+    data.forEach(function(element, index, array) {
+      console.log(element.commit.message)
+      $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/contents/model.sbml', {
+        'params': {
+          'ref': element.sha
+        }
+      }).success(function(data) {
+        $scope.editorText = data;
+      });
+    });
   });
 
-  $scope.models = [];
   $scope.addVersion = function() {
     var index = $scope.models.length;
     $scope.models.push({
