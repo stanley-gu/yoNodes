@@ -42,8 +42,7 @@ exports.bives = function(req, res) {
       console.log("The file was saved!");
     }
   });
-  //var command = 'java -cp BiVeS-1.1.jar de.unirostock.sems.bives.api.SBMLDiff first.xml second.xml';
-  var command = 'java -cp BiVeS-1.1.jar de.unirostock.sems.bives.api.SBMLDiff first.xml second.xml';
+  var command = 'java -cp BiVeS-1.1.jar de.unirostock.sems.bives.api.SBMLDiff --graphml first.xml second.xml';
 
   child = exec(command, function(error, stdout, stderr) {
     console.log('stdout: ' + stdout);

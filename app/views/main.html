@@ -11,6 +11,8 @@
 </div>
 -->
 <div class="container" ng-controller='AceCtrl'>
+   <h1>Enter SBML:</h1>
+
   <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_light', mode: 'xml'}"
   ng-model='editorText'></div>{{editorText}}
   <div>
@@ -34,7 +36,11 @@
       </td>
     </tr>
   </table>
+   <h1>Compare Two Versions</h1>
+
   <button class='btn btn-large' ng-click='compareVersions()'><i class='icon-list-alt'></i> Compare Versions</button>
   <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_dark', mode: 'xml'}"
   ng-model='modelDiff'></div>
+
+  <h1>Diff Visualization</h1>
 </div>
