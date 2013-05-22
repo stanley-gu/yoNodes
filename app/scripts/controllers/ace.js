@@ -17,13 +17,18 @@ angular.module('yoNodesApp')
     $scope.versions = [];
     //$http.get(data[0].commit.url + '/model.sbml').success
     data.forEach(function(element, index, array) {
-      console.log(element.commit.message)
+      console.log(element.commit.message);
       $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/contents/model.sbml', {
         'params': {
           'ref': element.sha
         }
       }).success(function(data) {
-        $scope.editorText = data;
+        //$scope.editorText = data;
+        $scope.models.push({
+          name: element.commit.message,
+          text: data,
+          checked: false
+        })
       });
     });
   });
@@ -48,8 +53,8 @@ angular.module('yoNodesApp')
       }
     });
     $http.post('http://localhost:3000/bives', {
-      'first': $scope.models[0].text,
-      'second': $scope.models[1].text
+      'first': $scope.models[isChecked[0]].text,
+      'second': $scope.models[isChecked[1]].text
     }).success(function(data, status, headers, config) {
       $scope.modelDiff = data.diff;
       console.log('Sent request!');
