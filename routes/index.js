@@ -42,13 +42,28 @@ exports.bives = function(req, res) {
       console.log("The file was saved!");
     }
   });
-  var command = 'java -cp BiVeS-1.1.jar de.unirostock.sems.bives.api.SBMLDiff --graphml first.xml second.xml';
+
+  var output = {};
+
+  var command = 'java -cp BiVeS-1.1.jar de.unirostock.sems.bives.api.SBMLDiff first.xml second.xml';
 
   child = exec(command, function(error, stdout, stderr) {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
-    res.send(stdout);
-    res.send(200);
+    output.diff = stdout;
+    //res.send(stdout);
+    //res.send(200);
+    command = 'java -cp BiVeS-1.1.jar de.unirostock.sems.bives.api.SBMLDiff --graphml first.xml second.xml';
+    exec(command, function(error, stdout, stderr) {
+      console.log('stdout: ' + stdout);
+      console.log('stderr: ' + stderr);
+      output.graphml = stdout;
+      res.send(output);
+      //res.send(200);
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
+    });
     if (error !== null) {
       console.log('exec error: ' + error);
     }

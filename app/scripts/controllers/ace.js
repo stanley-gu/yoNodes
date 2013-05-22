@@ -35,7 +35,7 @@ angular.module('yoNodesApp')
       'first': $scope.models[0].text,
       'second': $scope.models[1].text
     }).success(function(data, status, headers, config) {
-      $scope.modelDiff = data;
+      $scope.modelDiff = data.diff;
       console.log('Sent request!');
     }).error(function(data, status, headers, config) {
       console.log('Error!');
