@@ -15,6 +15,7 @@ angular.module('yoNodesApp')
   $scope.githubRepository = 'simpleSbmlModel';
   $scope.githubModelName = 'model.sbml';
 
+
   $scope.loadFromGithub = function() {
     $scope.models = [];
     $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
@@ -63,9 +64,11 @@ angular.module('yoNodesApp')
       'second': $scope.models[isChecked[1]].text
     }).success(function(data, status, headers, config) {
       $scope.modelDiff = data.diff;
+      $scope.graphml = data.graphml;
       console.log('Sent request!');
     }).error(function(data, status, headers, config) {
       console.log('Error!');
     });
   };
+  $scope.loadFromGithub();
 });

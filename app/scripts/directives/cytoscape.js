@@ -5,7 +5,13 @@ angular.module('yoNodesApp')
   return {
     template: '<div></div>',
     restrict: 'E',
+    scope: {
+      graph: '='
+    },
     link: function postLink(scope, element, attrs) {
+
+      var id = attrs.id;
+
       var shapeMapper = {
         attrName: "node set",
         entries: [{
@@ -125,46 +131,52 @@ angular.module('yoNodesApp')
       };
 
       var options = {
-        swfPath: "swf/CytoscapeWeb",
-        flashInstallerPath: "swf/playerProductInstall"
+        swfPath: "components/cytoscape_web/swf/CytoscapeWeb",
+        flashInstallerPath: "components/cytoscape_web/swf/playerProductInstall"
       };
 
+      scope.$watch('graph', function(newVal, oldVal) {
 
-      function drawDiffFlash(graph) {
-        var draw_options = {
-          network: graph,
-          edgeLabelsVisible: true,
-          layout: "ForceDirected",
-          visualStyle: visual_style,
-        };
+        if (!newVal) {
+          return;
+        }
+        drawDiffFlash(newVal);
+        function drawDiffFlash(graph) {
+          var draw_options = {
+            network: graph,
+            edgeLabelsVisible: true,
+            layout: "ForceDirected",
+            visualStyle: visual_style,
+          };
 
-        var diffFlash = new org.cytoscapeweb.Visualization("graphdiffflash", options);
-        diffFlash.draw(draw_options);
-      }
+          var diffFlash = new org.cytoscapeweb.Visualization(id, options);
+          diffFlash.draw(draw_options);
+        }
 
-      function drawTreeFlash(graph) {
-        var draw_options = {
-          network: graph,
-          edgeLabelsVisible: true,
-          layout: "ForceDirected",
-          visualStyle: visual_style,
-        };
+        function drawTreeFlash(graph) {
+          var draw_options = {
+            network: graph,
+            edgeLabelsVisible: true,
+            layout: "ForceDirected",
+            visualStyle: visual_style,
+          };
 
-        var treeFlash = new org.cytoscapeweb.Visualization("graphtreeflash", options);
-        treeFlash.draw(draw_options);
-      }
+          var treeFlash = new org.cytoscapeweb.Visualization("graphtreeflash", options);
+          treeFlash.draw(draw_options);
+        }
 
-      function drawModelVizFlash(graph) {
-        var draw_options = {
-          network: graph,
-          edgeLabelsVisible: true,
-          layout: "ForceDirected",
-          visualStyle: visual_style,
-        };
+        function drawModelVizFlash(graph) {
+          var draw_options = {
+            network: graph,
+            edgeLabelsVisible: true,
+            layout: "ForceDirected",
+            visualStyle: visual_style,
+          };
 
-        var treeFlash = new org.cytoscapeweb.Visualization("graphmodelvizflash", options);
-        treeFlash.draw(draw_options);
-      }
+          var treeFlash = new org.cytoscapeweb.Visualization("graphmodelvizflash", options);
+          treeFlash.draw(draw_options);
+        }
+      });
     }
   };
 });
