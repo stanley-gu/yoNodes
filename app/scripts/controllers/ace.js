@@ -11,28 +11,34 @@ angular.module('yoNodesApp')
     $scope.active = 'active';
   };
 
-  $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
-  $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/commits').success(function(data) {
-    $scope.commits = data;
-    $scope.versions = [];
-    //$http.get(data[0].commit.url + '/model.sbml').success
-    data.forEach(function(element, index, array) {
-      console.log(element.commit.message);
-      $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/contents/model.sbml', {
-        'params': {
-          'ref': element.sha
-        }
-      }).success(function(data) {
-        //$scope.editorText = data;
-        $scope.models.push({
-          name: element.commit.message,
-          text: data,
-          checked: false
-        })
+  $scope.githubUserName = 'stanley-gu';
+  $scope.githubRepository = 'simpleSbmlModel';
+  $scope.githubModelName = 'model.sbml';
+
+  $scope.loadFromGithub = function() {
+    $scope.models = [];
+    $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
+    $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/commits').success(function(data) {
+      $scope.commits = data;
+      $scope.versions = [];
+      //$http.get(data[0].commit.url + '/model.sbml').success
+      data.forEach(function(element, index, array) {
+        console.log(element.commit.message);
+        $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/contents/' + $scope.githubModelName, {
+          'params': {
+            'ref': element.sha
+          }
+        }).success(function(data) {
+          //$scope.editorText = data;
+          $scope.models.push({
+            name: element.commit.message,
+            text: data,
+            checked: false
+          })
+        });
       });
     });
-  });
-
+  }
   $scope.addVersion = function() {
     var index = $scope.models.length;
     $scope.models.push({
