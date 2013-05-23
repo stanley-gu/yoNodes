@@ -13,19 +13,23 @@
 <div class="container" ng-controller='AceCtrl'>
    <h1>Enter GitHub Repository Information</h1>
 
-  <label>GitHub User Name:</label>
-  <input type='text' ng-model='githubUserName' placeholder='stanley-gu'>
-  <label>GitHub Repository:</label>
-  <input type='text' ng-model='githubRepository' placeholder='simpleSbmlModel'>
-  <label>Model File Name:</label>
-  <input type='text' ng-model='githubModelName' placeholder='model.sbml'>
-  <button class='btn btn-large' ng-click='loadFromGithub()'>Load Model History From GitHub</button>
+  <form>
+    <fieldset>
+      <label>GitHub User Name:</label>
+      <input type='text' ng-model='githubUserName' placeholder='stanley-gu'>
+      <label>GitHub Repository:</label>
+      <input type='text' ng-model='githubRepository' placeholder='simpleSbmlModel'>
+      <label>Model File Name:</label>
+      <input type='text' ng-model='githubModelName' placeholder='model.sbml'>
+    </fieldset>
+  </form>
+  <button class='btn btn-large btn-success' ng-click='loadFromGithub()'><i class='icon-refresh'></i> Load Model History From GitHub</button>
    <h1>Enter SBML:</h1>
 
   <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_light', mode: 'xml'}"
   ng-model='editorText'></div>
   <div>
-    <button class='btn btn-large' ng-click='addVersion()'><i class='icon-plus-sign'></i> Save Version</button>
+    <button class='btn btn-large btn-success' ng-click='addVersion()'><i class='icon-plus-sign'></i> Save Version</button>
   </div>
    <h1>Model Version History:</h1>
 
@@ -47,7 +51,7 @@
   </table>
    <h1>Compare Two Versions</h1>
 
-  <button class='btn btn-large' ng-click='compareVersions()'><i class='icon-list-alt'></i> Compare Versions</button>
+  <button class='btn btn-large btn-success' ng-click='compareVersions()'><i class='icon-list-alt'></i> Compare Versions</button>
   <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_dark', mode: 'xml'}"
   ng-model='modelDiff'></div>
    <h1>Diff Visualization</h1>
