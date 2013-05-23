@@ -11,7 +11,7 @@
 </div>
 -->
 <div class="container" ng-controller='AceCtrl'>
-   <h1>Enter GitHub Repository Information</h1>
+   <h1>Enter GitHub Repository Information:</h1>
 
   <form>
     <fieldset>
@@ -49,12 +49,12 @@
       </td>
     </tr>
   </table>
-   <h1>Compare Two Versions</h1>
+   <h1>Compare Two Versions:</h1>
 
   <button class='btn btn-large btn-success' ng-click='compareVersions()'><i class='icon-list-alt'></i> Compare Versions</button>
   <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_dark', mode: 'xml'}"
   ng-model='modelDiff'></div>
-   <h1>Diff Visualization</h1>
+   <h1>Diff Visualization:</h1>
 
   <cytoscape id='vis' graph='graphml' height='400'></cytoscape>
 </div>
