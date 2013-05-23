@@ -17,25 +17,39 @@ angular.module('yoNodesApp')
 
 
   $scope.loadFromGithub = function() {
-    $scope.models = [];
     $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
     $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/commits').success(function(data) {
+
+      function compare(a, b) {
+        if (a.commit.author.date < b.commit.author.date) {
+          return -1;
+        }
+        if (a.commit.author.date < b.commit.author.date) {
+          return 1;
+        }
+        return 0;
+      }
+      //$scope.commits = data.sort(compare);
+
+     data.forEach(function(element){
+       console.log(element.commit.message)
+     })
       $scope.commits = data;
+      $scope.models = [];
       $scope.versions = [];
-      //$http.get(data[0].commit.url + '/model.sbml').success
-      data.forEach(function(element, index, array) {
-        console.log(element.commit.message);
+      $scope.commits.forEach(function(element, index, array) {
         $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/contents/' + $scope.githubModelName, {
           'params': {
             'ref': element.sha
           }
         }).success(function(data) {
-          //$scope.editorText = data;
-          $scope.models.push({
+          console.log(index)
+          console.log(element.commit.message)
+          $scope.models[array.length-1-index] = {
             name: element.commit.message,
             text: data,
             checked: false
-          })
+          };
         });
       });
     });
