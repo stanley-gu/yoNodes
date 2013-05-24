@@ -5,6 +5,7 @@ angular.module('yoNodesApp')
   return {
     template: '<div></div>',
     restrict: 'E',
+    replace: true,
     scope: {
       graph: '='
     },
