@@ -38,7 +38,7 @@ angular.module('yoNodesApp')
       $scope.models = [];
       $scope.versions = [];
       $scope.commits.forEach(function(element, index, array) {
-        $http.get('https://api.github.com/repos/stanley-gu/simpleSbmlModel/contents/' + $scope.githubModelName, {
+        $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/contents/' + $scope.githubModelName, {
           'params': {
             'ref': element.sha
           }
