@@ -93,6 +93,12 @@ angular.module('yoNodesApp')
   };
   $scope.loadVersion = function(index) {
     $scope.editorText = $scope.models[index].text;
+    $http.post('http://localhost:3000/bives', {
+      'first': $scope.editorText,
+      'second': $scope.editorText
+    }).success(function(data){
+      $scope.previewGraphml = data.graphml;
+    })
   };
 
   $scope.compareVersions = function() {
