@@ -19,17 +19,32 @@ angular.module('yoNodesApp')
   $scope.githubRepositories = ['a', 'ab', 'abc'];
   $scope.githubFiles = ['a', 'ab', 'abc'];
 
-  $scope.$watch('githubUserName', function(newVal, oldVal){
+  $scope.$watch('githubUserName', function(newVal, oldVal) {
     console.log('Detected a change in User Name!');
-    $http.get('https://api.github.com/users/' + $scope.githubUserName + '/repos').success(function(data){
+    $http.get('https://api.github.com/users/' + $scope.githubUserName + '/repos').success(function(data) {
       var repos = [];
-      data.forEach(function(element){
+      data.forEach(function(element) {
         repos.push(element.name);
       });
       $scope.githubRepositories = repos;
     });
   });
 
+  $scope.$watch('githubRepository', function(newVal, oldVal) {
+    console.log('Detected a change in GitHub Repository Name!');
+    $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/branches/master').success(function(data) {
+      $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/git/trees/' + data.commit.sha + '?recursive=1').success(function(data) {
+        var files = [];
+        data.tree.forEach(function(element) {
+          files.push(element.path);
+        });
+        $scope.githubFiles = files;
+      });
+    });
+  });
+
+
+  // functions to model histories from github
   $scope.loadFromGithub = function() {
     $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
     $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/commits').success(function(data) {
@@ -45,9 +60,9 @@ angular.module('yoNodesApp')
       }
       //$scope.commits = data.sort(compare);
 
-     data.forEach(function(element){
-       console.log(element.commit.message)
-     })
+      data.forEach(function(element) {
+        console.log(element.commit.message)
+      })
       $scope.commits = data;
       $scope.models = [];
       $scope.versions = [];
@@ -59,7 +74,7 @@ angular.module('yoNodesApp')
         }).success(function(data) {
           console.log(index)
           console.log(element.commit.message)
-          $scope.models[array.length-1-index] = {
+          $scope.models[array.length - 1 - index] = {
             name: element.commit.message,
             text: data,
             checked: false
