@@ -15,6 +15,20 @@ angular.module('yoNodesApp')
   $scope.githubRepository = 'simpleSbmlModel';
   $scope.githubModelName = 'model.sbml';
 
+  // typeahead
+  $scope.githubRepositories = ['a', 'ab', 'abc'];
+  $scope.githubFiles = ['a', 'ab', 'abc'];
+
+  $scope.$watch('githubUserName', function(newVal, oldVal){
+    console.log('Detected a change in User Name!');
+    $http.get('https://api.github.com/users/' + $scope.githubUserName + '/repos').success(function(data){
+      var repos = [];
+      data.forEach(function(element){
+        repos.push(element.name);
+      });
+      $scope.githubRepositories = repos;
+    });
+  });
 
   $scope.loadFromGithub = function() {
     $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
