@@ -31,6 +31,8 @@
   <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_light', mode: 'xml'}"
   ng-model='editorText'></div>
   <div>
+    <label>Commit Message: </label>
+    <input type='text' ng-model='commitMessage'>
     <button class='btn btn-large btn-success' ng-click='addVersion()'><i class='icon-plus-sign'></i> Save Version</button>
   </div>
    <h1>Model Version History:</h1>

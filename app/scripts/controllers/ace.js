@@ -88,9 +88,9 @@ angular.module('yoNodesApp')
     });
   }
   $scope.addVersion = function() {
-    var index = $scope.models.length;
+    //var index = $scope.models.length;
     $scope.models.push({
-      name: index,
+      name: $scope.commitMessage,
       text: $scope.editorText,
       checked: false
     });
