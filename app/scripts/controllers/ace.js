@@ -15,8 +15,8 @@ angular.module('yoNodesApp')
   $scope.githubRepository = 'simpleSbmlModel';
   $scope.githubModelName = 'model.sbml';
 
-  $scope.bivesUrl = 'http://localhost:3000/bives';
-  //$scope.bivesUrl = 'http://bives.sysb.io';
+  //$scope.bivesUrl = 'http://localhost:3000/bives';
+  $scope.bivesUrl = 'http://bives.sysb.io';
 
 
   // typeahead
