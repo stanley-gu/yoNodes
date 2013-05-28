@@ -51,7 +51,7 @@ angular.module('yoNodesApp')
   // functions to model histories from github
   $scope.loadFromGithub = function() {
     $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
-    $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/commits').success(function(data) {
+    $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/commits?path=' + $scope.githubModelName).success(function(data) {
 
       function compare(a, b) {
         if (a.commit.author.date < b.commit.author.date) {
