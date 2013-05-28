@@ -15,6 +15,10 @@ angular.module('yoNodesApp')
   $scope.githubRepository = 'simpleSbmlModel';
   $scope.githubModelName = 'model.sbml';
 
+  $scope.bivesUrl = 'http://localhost:3000/bives';
+  //$scope.bivesUrl = 'http://bives.sysb.io';
+
+
   // typeahead
   $scope.githubRepositories = ['a', 'ab', 'abc'];
   $scope.githubFiles = ['a', 'ab', 'abc'];
@@ -93,7 +97,7 @@ angular.module('yoNodesApp')
   };
   $scope.loadVersion = function(index) {
     $scope.editorText = $scope.models[index].text;
-    $http.post('http://localhost:3000/bives', {
+    $http.post($scope.bivesUrl, {
       'first': $scope.editorText,
       'second': $scope.editorText
     }).success(function(data){
@@ -108,7 +112,7 @@ angular.module('yoNodesApp')
         isChecked.push(index);
       }
     });
-    $http.post('http://localhost:3000/bives', {
+    $http.post($scope.bivesUrl, {
       'first': $scope.models[isChecked[0]].text,
       'second': $scope.models[isChecked[1]].text
     }).success(function(data, status, headers, config) {
