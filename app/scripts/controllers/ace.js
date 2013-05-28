@@ -107,11 +107,17 @@ angular.module('yoNodesApp')
 
   $scope.compareVersions = function() {
     var isChecked = [];
+    var numChecked = 0;
     $scope.models.forEach(function(element, index) {
       if (element.checked) {
+        numChecked += 1;
         isChecked.push(index);
       }
     });
+    if (numChecked !== 2) {
+      alert('Please check only 2 versions to compare.');
+      return;
+    }
     $http.post($scope.bivesUrl, {
       'first': $scope.models[isChecked[0]].text,
       'second': $scope.models[isChecked[1]].text
