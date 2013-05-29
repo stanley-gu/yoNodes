@@ -10,7 +10,7 @@
 
 </div>
 -->
-<div class="container" ng-controller='AceCtrl'>
+<div class="container">
   <h1>Enter GitHub Repository Information:</h1>
   <form>
     <fieldset>
@@ -54,9 +54,14 @@
     </tr>
   </table>
   <h1>Model Preview:</h1>
-  <div>
-    <cytoscape id='previewVis' graph='previewGraphml' style="height:500px;"></cytoscape>
-    <h1>Compare Two Versions:</h1>
+  <div class='row'>
+    <div class='span6'>
+      <cytoscape id='previewVis' graph='previewGraphml' style="height:500px;"></cytoscape>
+      <h1>Compare Two Versions:</h1>
+    </div>
+    <div class='span6'>
+      <rickshaw width='400' height='400' data='simData'></rickshaw>
+    </div>
   </div>
   <button class='btn btn-large btn-success' ng-click='compareVersions()'>
     <i class='icon-list-alt'></i>Compare Versions</button>

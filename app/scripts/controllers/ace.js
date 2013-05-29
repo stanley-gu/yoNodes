@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('yoNodesApp')
-  .controller('AceCtrl', function($scope, $http) {
+angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http) {
   $scope.awesomeThings = ['HTML5 Boilerplate', 'AngularJS', 'Karma'];
   $scope.visible = true;
   $scope.active = '';
@@ -100,9 +99,40 @@ angular.module('yoNodesApp')
     $http.post($scope.bivesUrl, {
       'first': $scope.editorText,
       'second': $scope.editorText
-    }).success(function(data){
+    }).success(function(data) {
       $scope.previewGraphml = data.graphml;
-    })
+    });
+    $http.post('http://translator.sysb.io', {
+      'sim': {
+        'time': 100,
+        'steps': 100
+      },
+      'sbml': $scope.editorText
+    }).success(function(data, status, headers, config) {
+      var n, i, species, titles, numSpecies, palette, output;
+      palette = new Rickshaw.Color.Palette({
+        scheme: 'classic9'
+      });
+      titles = data[0];
+      numSpecies = data[0].length - 1;
+      output = [];
+      for (n = 0; n < numSpecies; n += 1) {
+        species = {};
+        species.name = titles[n + 1];
+        species.data = [];
+        species.color = palette.color();
+        for (i = 1; i < data.length; i += 1) {
+          species.data.push({
+            x: parseInt(data[i][0], 10),
+            y: parseInt(data[i][n + 1], 10)
+          });
+        }
+        output.push(species);
+      }
+      $scope.simData = output;
+    }).error(function(data, status, headers, config) {
+      $scope.simData = data;
+    });
   };
 
   $scope.compareVersions = function() {
@@ -130,4 +160,5 @@ angular.module('yoNodesApp')
     });
   };
   $scope.loadFromGithub();
+
 });
