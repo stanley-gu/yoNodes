@@ -11,32 +11,32 @@
 </div>
 -->
 <div class="container" ng-controller='AceCtrl'>
-   <h1>Enter GitHub Repository Information:</h1>
-
+  <h1>Enter GitHub Repository Information:</h1>
   <form>
     <fieldset>
       <label>GitHub User Name:</label>
-      <input type='text' ng-model='githubUserName' placeholder='Enter GitHub User'>
+      <input type='text' ng-model='githubUserName'
+      placeholder='Enter GitHub User'>
       <label>GitHub Repository:</label>
-      <input type='text' ng-model='githubRepository' placeholder='Enter GitHub Repository'
-      typeahead='repository for repository in githubRepositories | filter:$viewValue'>
+      <input type='text' ng-model='githubRepository'
+      placeholder='Enter GitHub Repository' typeahead='repository for repository in githubRepositories | filter:$viewValue'>
       <label>Model File Name:</label>
-      <input type='text' ng-model='githubModelName' placeholder='Enter Path to Model'
-      typeahead='file for file in githubFiles | filter:$viewValue'>
+      <input type='text' ng-model='githubModelName'
+      placeholder='Enter Path to Model' typeahead='file for file in githubFiles | filter:$viewValue'>
     </fieldset>
   </form>
-  <button class='btn btn-large btn-success' ng-click='loadFromGithub()'><i class='icon-refresh'></i> Load Model History From GitHub</button>
-   <h1>Enter SBML:</h1>
-
+  <button class='btn btn-large btn-success' ng-click='loadFromGithub()'>
+    <i class='icon-refresh'></i>Load Model History From GitHub</button>
+  <h1>Enter SBML:</h1>
   <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_light', mode: 'xml'}"
   ng-model='editorText'></div>
   <div>
-    <label>Commit Message: </label>
+    <label>Commit Message:</label>
     <input type='text' ng-model='commitMessage'>
-    <button class='btn btn-large btn-success' ng-click='addVersion()'><i class='icon-plus-sign'></i> Save Version</button>
+    <button class='btn btn-large btn-success' ng-click='addVersion()'>
+      <i class='icon-plus-sign'></i>Save Version</button>
   </div>
-   <h1>Model Version History:</h1>
-
+  <h1>Model Version History:</h1>
   <table class="table table-striped">
     <th>Commit Message</th>
     <th>Load This Model</th>
@@ -44,8 +44,8 @@
     <tr ng-repeat='model in models'>
       <td>{{model.name}}</td>
       <td>
-        <button class='btn' ng-click='loadVersion($index)'><i class='icon-share'></i>
-
+        <button class='btn' ng-click='loadVersion($index)'>
+          <i class='icon-share'></i>
         </button>
       </td>
       <td>
@@ -53,15 +53,15 @@
       </td>
     </tr>
   </table>
-   <h1>Model Preview:</h1>
-
-  <cytoscape id='previewVis' graph='previewGraphml' style="height:500px;"></cytoscape>
-   <h1>Compare Two Versions:</h1>
-
-  <button class='btn btn-large btn-success' ng-click='compareVersions()'><i class='icon-list-alt'></i> Compare Versions</button>
+  <h1>Model Preview:</h1>
+  <div>
+    <cytoscape id='previewVis' graph='previewGraphml' style="height:500px;"></cytoscape>
+    <h1>Compare Two Versions:</h1>
+  </div>
+  <button class='btn btn-large btn-success' ng-click='compareVersions()'>
+    <i class='icon-list-alt'></i>Compare Versions</button>
   <div ui-ace="{useWrapMode : true, showGutter: true, theme:'solarized_dark', mode: 'xml'}"
   ng-model='modelDiff'></div>
-   <h1>Diff Visualization:</h1>
-
+  <h1>Diff Visualization:</h1>
   <cytoscape id='vis' graph='graphml' style="height:500px;"></cytoscape>
 </div>
