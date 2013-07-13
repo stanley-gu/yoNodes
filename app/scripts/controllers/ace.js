@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http) {
+angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $window, $location) {
   $scope.awesomeThings = ['HTML5 Boilerplate', 'AngularJS', 'Karma'];
   $scope.visible = true;
   $scope.active = '';
@@ -10,13 +10,30 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http) {
     $scope.active = 'active';
   };
 
-  $scope.githubUserName = 'stanley-gu';
-  $scope.githubRepository = 'simpleSbmlModel';
-  $scope.githubModelName = 'model.sbml';
+  var client_id = 'b6772930efdcc39aa16f';
 
   //$scope.bivesUrl = 'http://localhost:3000/bives';
   $scope.bivesUrl = 'http://bives.sysb.io';
 
+  // logging in to github
+  $scope.loginMessage = 'Log in to Github';
+  $scope.classGithubLoginButton = 'btn btn-danger'
+  $scope.loginToGithub = function () {
+    if (!$scope.accessToken) {
+  
+        $window.OAuth.initialize('EFBBdvbz8MYOYgVTBxOG2sg7JGM');
+        $window.OAuth.popup('github', function(err, result) {
+        //handle error with err
+        //use result.access_token in your API request
+        $scope.$apply(function() {
+          $scope.accessToken = result.access_token;
+          $scope.classGithubLoginButton = 'btn btn-success'
+          $scope.loginMessage = 'Logged in to GitHub';
+        });
+      });
+    }
+
+  };
 
   // typeahead
   $scope.githubRepositories = ['a', 'ab', 'abc'];
@@ -24,7 +41,11 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http) {
 
   $scope.$watch('githubUserName', function(newVal, oldVal) {
     console.log('Detected a change in User Name!');
-    $http.get('https://api.github.com/users/' + $scope.githubUserName + '/repos').success(function(data) {
+    var url = 'https://api.github.com/users/' + $scope.githubUserName + '/repos';
+    if ($scope.accessToken) {
+      url += '?access_token=' + $scope.accessToken;
+    }
+    $http.get(url).success(function(data) {
       var repos = [];
       data.forEach(function(element) {
         repos.push(element.name);
@@ -35,8 +56,16 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http) {
 
   $scope.$watch('githubRepository', function(newVal, oldVal) {
     console.log('Detected a change in GitHub Repository Name!');
-    $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/branches/master').success(function(data) {
-      $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/git/trees/' + data.commit.sha + '?recursive=1').success(function(data) {
+    var urlRepositories = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/branches/master';
+    if($scope.accessToken) {
+        urlRepositories += '?access_token=' + $scope.accessToken; 
+      }
+    $http.get(urlRepositories).success(function(data) {
+      var urlFiles = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/git/trees/' + data.commit.sha + '?recursive=1';
+      if($scope.accessToken) {
+        urlFiles += '&access_token=' + $scope.accessToken; 
+      }
+      $http.get(urlFiles).success(function(data) {
         var files = [];
         data.tree.forEach(function(element) {
           files.push(element.path);
@@ -50,7 +79,11 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http) {
   // functions to model histories from github
   $scope.loadFromGithub = function() {
     $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
-    $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/commits?path=' + $scope.githubModelName).success(function(data) {
+    var urlCommits = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/commits?path=' + $scope.githubModelName;
+    if($scope.accessToken) {
+        urlCommits += '&access_token=' + $scope.accessToken; 
+    }
+    $http.get(urlCommits).success(function(data) {
 
       function compare(a, b) {
         if (a.commit.author.date < b.commit.author.date) {
@@ -70,7 +103,11 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http) {
       $scope.models = [];
       $scope.versions = [];
       $scope.commits.forEach(function(element, index, array) {
-        $http.get('https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/contents/' + $scope.githubModelName, {
+        var urlContents = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/contents/' + $scope.githubModelName;
+        if($scope.accessToken) {
+          urlContents += '?access_token=' + $scope.accessToken; 
+        }
+        $http.get(urlContents, {
           'params': {
             'ref': element.sha
           }

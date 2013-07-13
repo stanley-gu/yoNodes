@@ -52,6 +52,7 @@
           <script src="components/rickshaw/vendor/d3.layout.min.js"></script>
           <script src="components/rickshaw/rickshaw.min.js"></script>
           <script src="components/angular-rickshaw/angular-rickshaw.js"></script>
+          <script src="components/oauth-js/oauth.min.js"></script>
           <!-- build:js scripts/scripts.js -->
           <script src="scripts/app.js"></script>
           <script src="scripts/controllers/main.js"></script>
@@ -82,6 +83,9 @@
               g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
               s.parentNode.insertBefore(g, s)
             }(document, 'script'));
+          </script>
+          <script>
+            OAuth.initialize('EFBBdvbz8MYOYgVTBxOG2sg7JGM');
           </script>
         </body>
         

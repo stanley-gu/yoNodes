@@ -16,7 +16,8 @@
     "biographer": "latest",
     "angular-bootstrap": "~0.3.0",
     "cytoscape_web": "latest",
-    "rickshaw": "https://github.com/shutterstock/rickshaw"
+    "rickshaw": "https://github.com/shutterstock/rickshaw",
+    "oauth-js": "https://github.com/oauth-io/oauth-js.git"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.5",
