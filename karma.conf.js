@@ -7,12 +7,12 @@ basePath = '';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-    'app/components/angular/angular.js',
-    'app/components/angular-mocks/angular-mocks.js',
-    'app/scripts/*.js',
-    'app/scripts/**/*.js',
-    'test/mock/**/*.js',
-    'test/spec/**/*.js'
+  'app/components/angular/angular.js',
+  'app/components/angular-mocks/angular-mocks.js',
+  'app/scripts/*.js',
+  'app/scripts/**/*.js',
+  'test/mock/**/*.js',
+  'test/spec/**/*.js'
 ];
 
 // list of files to exclude
@@ -23,10 +23,11 @@ exclude = [];
 reporters = ['progress'];
 
 // web server port
-port = 8080;
+hostname = process.env.IP;
+port = process.env.PORT;
 
 // cli runner port
-runnerPort = 9100;
+runnerPort = 0;
 
 // enable / disable colors in the output (reporters and logs)
 colors = true;
@@ -46,7 +47,7 @@ autoWatch = false;
 // - Safari (only Mac)
 // - PhantomJS
 // - IE (only Windows)
-browsers = ['Chrome'];
+browsers = ['PhantomJS'];
 
 // If browser does not capture in given timeout [ms], kill it
 captureTimeout = 5000;
