@@ -1,12 +1,5 @@
 /* Will be compiled down to a single stylesheet with your sass files */
- .ace_editor {
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-}
-.ace_editor_wrapper {
-  position : relative;
+.ace_editor {
   height: 400px
 }
 html, body {

@@ -11,14 +11,13 @@
     "angular-ui": "~0.4.0",
     "bootstrap": "~2.3.2",
     "d3": "~3.1.7",
-    "angular-ui-ace": "~0.0.3",
-    "ace-builds": "~1.0.0",
+    "angular-ui-ace": "latest",
+    "ace-builds": "latest",
     "biographer": "latest",
     "angular-bootstrap": "~0.3.0",
     "cytoscape_web": "latest",
-    "rickshaw": "https://github.com/shutterstock/rickshaw",
+    "rickshaw": "https://github.com/shutterstock/rickshaw.git",
     "oauth-js": "https://github.com/oauth-io/oauth-js.git",
-    "angular-socket-io": "~0.2.0",
     "socket.io-client": "~0.9.16"
   },
   "devDependencies": {

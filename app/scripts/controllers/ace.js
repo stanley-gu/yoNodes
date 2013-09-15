@@ -166,8 +166,8 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
       params: [$scope.editorText]
     });
     simSocket.emit('run', {
-      method: 'simulate',
-      params: []
+      method: 'simulateEx',
+      params: [0, 100, 100]
     });
     simSocket.on('response', function(data) {
       if (data.method.indexOf('simulate') > -1) {
