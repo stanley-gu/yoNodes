@@ -26,23 +26,21 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     console.log('connected to simulator');
   });
 
-  var client_id = 'b6772930efdcc39aa16f';
-
   //$scope.bivesUrl = 'http://bives.sysb.io';
   $scope.bivesUrl = 'http://node-bives.stanley-gu.c9.io';
 
   // logging in to github
   $scope.loginMessage = 'Log in to Github';
   $scope.classGithubLoginButton = 'btn btn-danger';
-  $scope.loginToGithub = function () {
+  $scope.loginToGithub = function() {
     if (!$scope.accessToken) {
-        $window.OAuth.initialize('EFBBdvbz8MYOYgVTBxOG2sg7JGM');
-        $window.OAuth.popup('github', function(err, result) {
+      $window.OAuth.initialize('EFBBdvbz8MYOYgVTBxOG2sg7JGM');
+      $window.OAuth.popup('github', function(err, result) {
         //handle error with err
         //use result.access_token in your API request
         $scope.$apply(function() {
           $scope.accessToken = result.access_token;
-          $scope.classGithubLoginButton = 'btn btn-success'
+          $scope.classGithubLoginButton = 'btn btn-success';
           $scope.loginMessage = 'Logged in to GitHub';
         });
       });
@@ -69,27 +67,27 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     });
   });
 
-  
+
   var processArray = function(items, process) {
     var todo = items.concat();
 
     setTimeout(function() {
-        process(todo.shift());
-        if(todo.length > 0) {
-            setTimeout(arguments.callee, 25);
-        }
+      process(todo.shift());
+      if (todo.length > 0) {
+        setTimeout(arguments.callee, 25);
+      }
     }, 25);
-  }
+  };
   $scope.$watch('githubRepository', function(newVal, oldVal) {
     console.log('Detected a change in GitHub Repository Name!');
     var urlRepositories = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/branches/master';
-    if($scope.accessToken) {
-        urlRepositories += '?access_token=' + $scope.accessToken; 
-      }
+    if ($scope.accessToken) {
+      urlRepositories += '?access_token=' + $scope.accessToken;
+    }
     $http.get(urlRepositories).success(function(data) {
       var urlFiles = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/git/trees/' + data.commit.sha + '?recursive=1';
-      if($scope.accessToken) {
-        urlFiles += '&access_token=' + $scope.accessToken; 
+      if ($scope.accessToken) {
+        urlFiles += '&access_token=' + $scope.accessToken;
       }
       $http.get(urlFiles).success(function(data) {
         var files = [];
@@ -106,8 +104,8 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
   $scope.loadFromGithub = function() {
     $http.defaults.headers.common.Accept = $http.defaults.headers.common.Accept + ', application/vnd.github.VERSION.raw';
     var urlCommits = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/commits?path=' + $scope.githubModelName;
-    if($scope.accessToken) {
-        urlCommits += '&access_token=' + $scope.accessToken; 
+    if ($scope.accessToken) {
+      urlCommits += '&access_token=' + $scope.accessToken;
     }
     $http.get(urlCommits).success(function(data) {
 
@@ -123,23 +121,23 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
       //$scope.commits = data.sort(compare);
 
       data.forEach(function(element) {
-        console.log(element.commit.message)
-      })
+        console.log(element.commit.message);
+      });
       $scope.commits = data;
       $scope.models = [];
       $scope.versions = [];
       $scope.commits.forEach(function(element, index, array) {
         var urlContents = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/contents/' + $scope.githubModelName;
-        if($scope.accessToken) {
-          urlContents += '?access_token=' + $scope.accessToken; 
+        if ($scope.accessToken) {
+          urlContents += '?access_token=' + $scope.accessToken;
         }
         $http.get(urlContents, {
           'params': {
             'ref': element.sha
           }
         }).success(function(data) {
-          console.log(index)
-          console.log(element.commit.message)
+          console.log(index);
+          console.log(element.commit.message);
           $scope.models[array.length - 1 - index] = {
             name: element.commit.message,
             text: data,
@@ -148,7 +146,7 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
         });
       });
     });
-  }
+  };
   $scope.addVersion = function() {
     //var index = $scope.models.length;
     $scope.models.push({
@@ -165,14 +163,14 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     }).success(function(data) {
       $scope.previewGraphml = data.graphml;
     });
-    
+
     simSocket.emit('run', {
-      method: 'loadSBML', 
-      params:[$scope.editorText]
+      method: 'loadSBML',
+      params: [$scope.editorText]
     });
     simSocket.emit('run', {
-      method: 'simulate', 
-      params:[]
+      method: 'simulate',
+      params: []
     });
     simSocket.on('response', function(data) {
       if (data.method.indexOf('simulate') > -1) {
@@ -198,7 +196,7 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
           output.push(species);
         }
         $scope.simData = output;
-        }
+      }
     });
   };
 
