@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('yoNodesApp', ['ui', 'ui.ace', 'ui.bootstrap',
-    'stanley-gu.angular-rickshaw', 'btford.socket-io'
+    'stanley-gu.angular-rickshaw'
   ]).config(function($routeProvider) {
   $routeProvider.when('/:githubUserName/:githubRepository/:githubModelName', {
     templateUrl: 'views/main.html',

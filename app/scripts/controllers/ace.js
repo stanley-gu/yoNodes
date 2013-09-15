@@ -20,6 +20,12 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     $scope.githubModelName = $routeParams.githubModelName;
   }
 
+  // configuring for socket.io
+  var simSocket = io.connect('http://sysb.io:8003');
+  simSocket.on('connect', function() {
+    console.log('connected to simulator');
+  });
+
   var client_id = 'b6772930efdcc39aa16f';
 
   //$scope.bivesUrl = 'http://bives.sysb.io';
@@ -30,7 +36,6 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
   $scope.classGithubLoginButton = 'btn btn-danger';
   $scope.loginToGithub = function () {
     if (!$scope.accessToken) {
-  
         $window.OAuth.initialize('EFBBdvbz8MYOYgVTBxOG2sg7JGM');
         $window.OAuth.popup('github', function(err, result) {
         //handle error with err
@@ -160,36 +165,40 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     }).success(function(data) {
       $scope.previewGraphml = data.graphml;
     });
-    $http.post('http://simulate.sysb.io', {
-      'sim': {
-        'time': 100,
-        'steps': 100
-      },
-      'sbml': $scope.editorText
-    }).success(function(data, status, headers, config) {
-      var n, i, species, titles, numSpecies, palette, output;
-      palette = new Rickshaw.Color.Palette({
-        scheme: 'classic9'
-      });
-      titles = data[0];
-      numSpecies = data[0].length - 1;
-      output = [];
-      for (n = 0; n < numSpecies; n += 1) {
-        species = {};
-        species.name = titles[n + 1];
-        species.data = [];
-        species.color = palette.color();
-        for (i = 1; i < data.length; i += 1) {
-          species.data.push({
-            x: parseInt(data[i][0], 10),
-            y: parseInt(data[i][n + 1], 10)
-          });
+    
+    simSocket.emit('run', {
+      method: 'loadSBML', 
+      params:[$scope.editorText]
+    });
+    simSocket.emit('run', {
+      method: 'simulate', 
+      params:[]
+    });
+    simSocket.on('response', function(data) {
+      if (data.method.indexOf('simulate') > -1) {
+        var n, i, species, titles, numSpecies, palette, output;
+        palette = new Rickshaw.Color.Palette({
+          scheme: 'classic9'
+        });
+        data = data.output;
+        titles = data[0];
+        numSpecies = data[0].length - 1;
+        output = [];
+        for (n = 0; n < numSpecies; n += 1) {
+          species = {};
+          species.name = titles[n + 1];
+          species.data = [];
+          species.color = palette.color();
+          for (i = 1; i < data.length; i += 1) {
+            species.data.push({
+              x: parseInt(data[i][0], 10),
+              y: parseInt(data[i][n + 1], 10)
+            });
+          }
+          output.push(species);
         }
-        output.push(species);
-      }
-      $scope.simData = output;
-    }).error(function(data, status, headers, config) {
-      $scope.simData = data;
+        $scope.simData = output;
+        }
     });
   };
 
