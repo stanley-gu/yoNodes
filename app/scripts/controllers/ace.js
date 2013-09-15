@@ -31,8 +31,15 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
   $scope.bivesUrl = 'http://node-bives.stanley-gu.c9.io';
 
   // logging in to github
-  $scope.loginMessage = 'Log in to Github';
-  $scope.classGithubLoginButton = 'btn btn-danger';
+  
+  if ($window.localStorage.getItem('accessToken')) {
+    $scope.accessToken = $window.localStorage.getItem('accessToken');
+    $scope.classGithubLoginButton = 'btn btn-success';
+    $scope.loginMessage = 'Logged in to GitHub';
+  } else {
+    $scope.classGithubLoginButton = 'btn btn-danger';
+    $scope.loginMessage = 'Log in to Github';
+  }
   $scope.loginToGithub = function() {
     if (!$scope.accessToken) {
       $window.OAuth.initialize('EFBBdvbz8MYOYgVTBxOG2sg7JGM');
@@ -40,6 +47,7 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
         //handle error with err
         //use result.access_token in your API request
         $scope.$apply(function() {
+          $window.localStorage.setItem('accessToken', result.access_token);
           $scope.accessToken = result.access_token;
           $scope.classGithubLoginButton = 'btn btn-success';
           $scope.loginMessage = 'Logged in to GitHub';
@@ -47,7 +55,6 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
       });
     }
   };
-  $scope.loginToGithub();
 
   // typeahead
   $scope.githubRepositories = ['a', 'ab', 'abc'];
