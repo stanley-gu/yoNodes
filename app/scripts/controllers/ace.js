@@ -13,7 +13,7 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
   var client_id = 'b6772930efdcc39aa16f';
 
   //$scope.bivesUrl = 'http://localhost:3000/bives';
-  $scope.bivesUrl = 'http://bives.sysb.io';
+  $scope.bivesUrl = 'http://node-bives.stanley-gu.c9.io';
 
   // logging in to github
   $scope.loginMessage = 'Log in to Github';
@@ -54,6 +54,17 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     });
   });
 
+  
+  var processArray = function(items, process) {
+    var todo = items.concat();
+
+    setTimeout(function() {
+        process(todo.shift());
+        if(todo.length > 0) {
+            setTimeout(arguments.callee, 25);
+        }
+    }, 25);
+  }
   $scope.$watch('githubRepository', function(newVal, oldVal) {
     console.log('Detected a change in GitHub Repository Name!');
     var urlRepositories = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/branches/master';
@@ -67,7 +78,7 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
       }
       $http.get(urlFiles).success(function(data) {
         var files = [];
-        data.tree.forEach(function(element) {
+        data.tree.forEach(function(element, index) {
           files.push(element.path);
         });
         $scope.githubFiles = files;
@@ -139,7 +150,7 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     }).success(function(data) {
       $scope.previewGraphml = data.graphml;
     });
-    $http.post('http://translator.sysb.io', {
+    $http.post('http://simulate.sysb.io', {
       'sim': {
         'time': 100,
         'steps': 100
