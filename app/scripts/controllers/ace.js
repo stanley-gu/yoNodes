@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $window, $location) {
+angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $window, $location, $routeParams) {
   $scope.awesomeThings = ['HTML5 Boilerplate', 'AngularJS', 'Karma'];
   $scope.visible = true;
   $scope.active = '';
@@ -10,14 +10,24 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     $scope.active = 'active';
   };
 
+  if ($routeParams.githubUserName) {
+    $scope.githubUserName = $routeParams.githubUserName;
+  }
+  if ($routeParams.githubRepository) {
+    $scope.githubRepository = $routeParams.githubRepository;
+  }
+  if ($routeParams.githubModelName) {
+    $scope.githubModelName = $routeParams.githubModelName;
+  }
+
   var client_id = 'b6772930efdcc39aa16f';
 
-  //$scope.bivesUrl = 'http://localhost:3000/bives';
+  //$scope.bivesUrl = 'http://bives.sysb.io';
   $scope.bivesUrl = 'http://node-bives.stanley-gu.c9.io';
 
   // logging in to github
   $scope.loginMessage = 'Log in to Github';
-  $scope.classGithubLoginButton = 'btn btn-danger'
+  $scope.classGithubLoginButton = 'btn btn-danger';
   $scope.loginToGithub = function () {
     if (!$scope.accessToken) {
   
@@ -32,8 +42,8 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
         });
       });
     }
-
   };
+  $scope.loginToGithub();
 
   // typeahead
   $scope.githubRepositories = ['a', 'ab', 'abc'];
