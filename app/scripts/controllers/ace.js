@@ -1,3 +1,4 @@
+/* globals angular:true */
 'use strict';
 
 angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $window, $location, $routeParams) {
@@ -21,7 +22,7 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
   }
 
   // configuring for socket.io
-  var simSocket = io.connect('http://sysb.io:8003');
+  var simSocket = $window.io.connect('http://sysb.io:8003');
   simSocket.on('connect', function() {
     console.log('connected to simulator');
   });
@@ -67,17 +68,6 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     });
   });
 
-
-  var processArray = function(items, process) {
-    var todo = items.concat();
-
-    setTimeout(function() {
-      process(todo.shift());
-      if (todo.length > 0) {
-        setTimeout(arguments.callee, 25);
-      }
-    }, 25);
-  };
   $scope.$watch('githubRepository', function(newVal, oldVal) {
     console.log('Detected a change in GitHub Repository Name!');
     var urlRepositories = 'https://api.github.com/repos/' + $scope.githubUserName + '/' + $scope.githubRepository + '/branches/master';
@@ -175,7 +165,7 @@ angular.module('yoNodesApp').controller('AceCtrl', function($scope, $http, $wind
     simSocket.on('response', function(data) {
       if (data.method.indexOf('simulate') > -1) {
         var n, i, species, titles, numSpecies, palette, output;
-        palette = new Rickshaw.Color.Palette({
+        palette = new $window.Rickshaw.Color.Palette({
           scheme: 'classic9'
         });
         data = data.output;
